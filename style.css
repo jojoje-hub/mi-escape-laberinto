@@ -1,0 +1,330 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  background-color: #0b090a;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'MedievalSharp', cursive, sans-serif;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* Escenario principal con aspect-ratio 16:9 idéntico a Genially */
+#game-stage {
+  position: relative;
+  width: 95vw;
+  max-width: 1200px;
+  height: 56.25vw;
+  max-height: 675px;
+  background-color: #000;
+  border: 3px solid #4a3b32;
+  box-shadow: 0 0 35px rgba(0, 0, 0, 0.9);
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+/* Manejo de pantallas/slides */
+.screen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-image: var(--bg);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.hidden {
+  display: none !important;
+  opacity: 0;
+}
+
+.screen.active {
+  display: flex;
+  opacity: 1;
+}
+
+/* Portada y textos */
+.overlay {
+  text-align: center;
+  background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.85) 90%);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2rem;
+}
+
+.game-title {
+  font-family: 'Cinzel', serif;
+  font-size: 3rem;
+  letter-spacing: 2px;
+  color: #f7d070;
+  text-shadow: 3px 3px 0 #000, 0 0 20px rgba(247, 208, 112, 0.6);
+}
+
+/* Botones con estilo mágico */
+.glow-btn {
+  padding: 12px 36px;
+  font-size: 1.4rem;
+  font-family: 'MedievalSharp', cursive;
+  background: #5c1d1d;
+  color: #fceade;
+  border: 2px solid #e0a96d;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(224, 169, 109, 0.4);
+  transition: all 0.25s ease;
+}
+
+.glow-btn:hover {
+  background: #8b2525;
+  box-shadow: 0 0 25px rgba(224, 169, 109, 0.9);
+  transform: scale(1.05);
+}
+
+.bottom-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.sub-btn {
+  padding: 8px 24px;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1.1rem;
+  background: rgba(20, 20, 20, 0.8);
+  border: 1px solid #c5a059;
+  color: #eae0d5;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.sub-btn:hover {
+  background: #c5a059;
+  color: #000;
+}
+
+/* Modales de introducción / misión */
+.modal {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 50;
+}
+
+.modal-box {
+  background: #1c1917;
+  border: 2px solid #d4af37;
+  border-radius: 8px;
+  max-width: 600px;
+  padding: 2rem;
+  position: relative;
+  text-align: left;
+  line-height: 1.6;
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.3);
+}
+
+.modal-box h2 {
+  color: #d4af37;
+  margin-bottom: 1rem;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #a8a29e;
+}
+
+.close-modal:hover { color: #fff; }
+
+/* Linterna interactiva */
+#flashlight {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 240, 150, 0.6) 0%, rgba(255, 240, 150, 0.1) 60%, transparent 80%);
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.torch-instruction {
+  position: absolute;
+  top: 10%;
+  background: rgba(0,0,0,0.7);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  border: 1px solid #78716c;
+}
+
+#secret-rune {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  bottom: 25%;
+  left: 32%;
+  cursor: pointer;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.15);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+/* Tarjetas de enigmas matemáticos */
+.enigma-card, .feedback-card, .victory-card {
+  background: rgba(15, 12, 10, 0.9);
+  border: 2px solid #b45309;
+  border-radius: 8px;
+  padding: 2.5rem;
+  text-align: center;
+  max-width: 650px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.8);
+}
+
+.math-problem {
+  font-size: 1.8rem;
+  color: #fde047;
+  margin: 1.5rem 0;
+}
+
+.options-grid {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.opt-btn {
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  font-family: inherit;
+  background: #292524;
+  color: #fafaf9;
+  border: 1px solid #78716c;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.opt-btn:hover {
+  background: #78350f;
+  border-color: #f59e0b;
+}
+
+/* Pantalla de Jumpscare / Error */
+.jumpscare-banner {
+  text-align: center;
+  background: rgba(0,0,0,0.8);
+  padding: 2rem;
+  border-radius: 8px;
+  border: 2px solid #dc2626;
+}
+
+.jumpscare-banner h2 {
+  color: #ef4444;
+  margin-bottom: 1.5rem;
+}
+
+/* Hub interactivo con nodos */
+.hub-header {
+  position: absolute;
+  top: 5%;
+  background: rgba(0,0,0,0.8);
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  border: 1px solid #a16207;
+  max-width: 80%;
+  text-align: center;
+}
+
+.node-portal, .node-lock {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #7c2d12;
+  border: 2px solid #fdba74;
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(253, 186, 116, 0.7);
+  transition: transform 0.2s;
+}
+
+.node-portal:hover, .node-lock:hover {
+  transform: scale(1.2);
+  background: #c2410c;
+}
+
+/* Cerradura y teclado numérico */
+.keypad-panel {
+  background: rgba(18, 18, 20, 0.95);
+  border: 3px solid #6b7280;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.keypad-title {
+  font-size: 1.2rem;
+  color: #e5e7eb;
+  margin-bottom: 1rem;
+}
+
+#code-display {
+  font-family: 'VT323', monospace;
+  font-size: 2.8rem;
+  background: #000;
+  color: #4ade80;
+  padding: 6px 12px;
+  letter-spacing: 12px;
+  border: 2px solid #374151;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.numpad {
+  display: grid;
+  grid-template-columns: repeat(3, 60px);
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.numpad button {
+  height: 60px;
+  font-size: 1.4rem;
+  font-family: 'VT323', monospace;
+  background: #374151;
+  color: #fff;
+  border: 1px solid #4b5563;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.numpad button:hover { background: #4b5563; }
+.numpad .check-key { background: #15803d; }
+.numpad .check-key:hover { background: #16a34a; }
+.numpad .action-key { background: #991b1b; }
+.numpad .action-key:hover { background: #b91c1c; }
